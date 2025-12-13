@@ -9,6 +9,9 @@ public class Movement : MonoBehaviour {
 
     // Rigidbody
     private Rigidbody _rb;
+    
+    // Camera
+    private Camera _camera;
 
     // Labels
     public TMP_Text speedLabel;
@@ -17,7 +20,7 @@ public class Movement : MonoBehaviour {
     // Physics variables
     private Vector3 _velocity;
     private bool _jumpRequested;
-    public float jumpSpeed = 8f;
+    public float jumpSpeed = 12f;
     public float airControlMult = 0.2f;
     
     bool IsGrounded() {
@@ -28,6 +31,7 @@ public class Movement : MonoBehaviour {
     public float baseSpeed = 7f;
     public float baseAccelSpeed = 7f;
     public float runMultiplier = 2f;
+    public float rotationSpeed = 120f;
 
     private float _maxSpeed;
     private float _accelSpeed;
@@ -44,6 +48,9 @@ public class Movement : MonoBehaviour {
 
         // Get rigidbody
         _rb = GetComponent<Rigidbody>();
+        
+        // Get camera
+        _camera = Camera.main;
 
         _runningSpeed = baseSpeed * runMultiplier;
         _runningAccelSpeed = baseAccelSpeed * runMultiplier;
@@ -65,20 +72,38 @@ public class Movement : MonoBehaviour {
 
         // Starting direction
         var direction = Vector3.zero;
+        
+        // Get camera transform and normalize
+        var cameraForward = _camera.transform.forward;
+        cameraForward.y = 0;
+        cameraForward.Normalize();
+        
+        var cameraRight =  _camera.transform.right;
+        cameraRight.y = 0;
+        cameraRight.Normalize();
 
         // Movement
         if (Keyboard.current.wKey.isPressed) {
-            direction += Vector3.forward;
+            direction += cameraForward;
         }
+        
         if (Keyboard.current.aKey.isPressed) {
-            direction += Vector3.left;
+            direction += -cameraRight;
         }
+        
         if (Keyboard.current.sKey.isPressed) {
-            direction += Vector3.back;
+            direction += -cameraForward;
         }
 
         if (Keyboard.current.dKey.isPressed) {
-            direction += Vector3.right;
+            direction += cameraRight;
+        }
+        
+        // Rotation
+        if (Keyboard.current.qKey.isPressed) {
+            transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+        } else if (Keyboard.current.eKey.isPressed) {
+            transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
         }
         
         // Check if jump is requested
