@@ -1,37 +1,44 @@
+using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.InputSystem;
 
 public class FollowCamera : MonoBehaviour {
-    // Define the player's transform and rigidbody, and define the camera
+    // Define the player's transform
     public Transform playerTransform;
-    public Rigidbody playerRigidBody;
-
-    private Camera _camera;
 
     // The speed the camera follows the player at
-    [FormerlySerializedAs("Speed")] public float speed = 90f;
+    public float speed = 90f;
     
     // Camera and player position variables
     private Vector3 _startingPlayerPos;
+    private Vector3 _offset;
     public float yOffset = 1f;
     public float zOffset = -7f;
+    public Vector2 clamp = new Vector2(-85f, 85f);
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void Start()
-    {
-        // Get the camera
-        _camera = GetComponent<Camera>();
-        
-        // Get player starting position
-        _startingPlayerPos = playerTransform.position;
-        
-        // Move camera behind player
-        transform.position = new Vector3(playerTransform.position.x, playerTransform.position.y + yOffset, playerTransform.position.z + zOffset);
+    // Mouse variables
+    public float mouseSensitivity = 8f;
+    private float _horizontalAngle;
+    private float _verticalAngle;
+
+    private void Start() {
+        _offset = new Vector3(0, yOffset, zOffset);
     }
 
-    // Update is called once per frame
     private void Update() {
-        var targetPos = new Vector3(playerTransform.position.x, playerTransform.position.y + yOffset, playerTransform.position.z + zOffset);
+        var mouseDelta = Mouse.current.delta.ReadValue() * (mouseSensitivity * Time.smoothDeltaTime);
+
+        // Store angles from mouse delta
+        _verticalAngle += mouseDelta.y;
+        _horizontalAngle += mouseDelta.x;
+        
+        // Clamp the vertical angle
+        _verticalAngle = Mathf.Clamp(_verticalAngle, clamp.x, clamp.y);
+        
+        var rotation = Quaternion.Euler(_verticalAngle, _horizontalAngle, 0);
+        var rotatedOffset = rotation * _offset;
+        
+        var targetPos = playerTransform.position + rotatedOffset;
         
         transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
         transform.LookAt(playerTransform);

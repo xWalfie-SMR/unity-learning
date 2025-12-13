@@ -40,7 +40,6 @@ public class Movement : MonoBehaviour {
     private float _runningSpeed;
     private float _runningAccelSpeed;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start() {
         // Set time to 0 and apply the fps label at start
         _time = 0f;
@@ -65,45 +64,28 @@ public class Movement : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
     private void Update() {
         // Update time
         _time += Time.deltaTime;
 
         // Starting direction
         var direction = Vector3.zero;
-        
-        // Get camera transform and normalize
-        var cameraForward = _camera.transform.forward;
-        cameraForward.y = 0;
-        cameraForward.Normalize();
-        
-        var cameraRight =  _camera.transform.right;
-        cameraRight.y = 0;
-        cameraRight.Normalize();
 
         // Movement
         if (Keyboard.current.wKey.isPressed) {
-            direction += cameraForward;
+            direction += Vector3.forward;
         }
         
         if (Keyboard.current.aKey.isPressed) {
-            direction += -cameraRight;
+            direction += Vector3.left;
         }
         
         if (Keyboard.current.sKey.isPressed) {
-            direction += -cameraForward;
+            direction += Vector3.back;
         }
 
         if (Keyboard.current.dKey.isPressed) {
-            direction += cameraRight;
-        }
-        
-        // Rotation
-        if (Keyboard.current.qKey.isPressed) {
-            transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
-        } else if (Keyboard.current.eKey.isPressed) {
-            transform.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
+            direction += Vector3.right;
         }
         
         // Check if jump is requested
