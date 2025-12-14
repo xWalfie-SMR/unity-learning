@@ -1,10 +1,10 @@
 # Unity Learning
 
-A Unity project for learning and experimenting with 3D character movement mechanics and camera controls.
+A personal Unity project where I'm learning through trial and error, experimenting with 3D character movement mechanics and camera controls.
 
 ## Overview
 
-This project implements a basic 3D character controller with physics-based movement, jumping mechanics, and a smooth follow camera. It serves as a foundation for learning Unity game development concepts including player input handling, physics interactions, and camera systems.
+This is my experimental Unity project where I'm trying out different game development concepts. Currently implements a basic 3D character controller with physics-based movement, jumping mechanics, and a smooth follow camera as I learn Unity through hands-on experimentation.
 
 ## Features
 
@@ -104,9 +104,9 @@ You can adjust various parameters in the Unity Inspector:
 - `Mouse Sensitivity`: Mouse look sensitivity (default: 12)
 - `Clamp`: Vertical rotation limits (default: 0-85 degrees)
 
-## Learning Topics Covered
+## What I'm Learning
 
-This project demonstrates:
+Through trial and error in this project, I'm experimenting with:
 - Unity's new Input System
 - Rigidbody physics and movement
 - Raycast-based ground detection
@@ -118,4 +118,4 @@ This project demonstrates:
 
 ## License
 
-This is a learning project. Feel free to use and modify as needed for your own learning purposes.
+This is my personal trial-and-error project for learning Unity. Feel free to check it out if you're interested.
