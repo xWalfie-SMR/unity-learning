@@ -26,13 +26,13 @@ This project implements a basic 3D character controller with physics-based movem
 ```
 unity-learning/
 ├── Assets/
+│   ├── InputSystem_Actions.inputactions
 │   ├── Scenes/
 │   │   └── MainScene.unity
 │   ├── Scripts/
 │   │   ├── Movement.cs          # Player movement controller
 │   │   └── FollowCamera.cs      # Camera follow system
-│   ├── Settings/
-│   └── InputSystem_Actions.inputactions
+│   └── Settings/
 ├── ProjectSettings/
 └── Packages/
 ```
