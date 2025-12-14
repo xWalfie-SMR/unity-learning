@@ -23,7 +23,7 @@ public class Movement : MonoBehaviour {
     public float jumpSpeed = 12f;
     public float airControlMult = 0.2f;
     
-    bool IsGrounded() {
+    private bool IsGrounded() {
         return Physics.Raycast(transform.position, -Vector3.up, 0.6f);
     }
 
@@ -31,7 +31,6 @@ public class Movement : MonoBehaviour {
     public float baseSpeed = 7f;
     public float baseAccelSpeed = 7f;
     public float runMultiplier = 2f;
-    public float rotationSpeed = 120f;
 
     private float _maxSpeed;
     private float _accelSpeed;
@@ -57,6 +56,9 @@ public class Movement : MonoBehaviour {
 
     // FixedUpdate
     private void FixedUpdate() {
+        // Apply movement
+        _rb.MovePosition(transform.position + _velocity * Time.fixedDeltaTime);
+        
         // Jump
         if (IsGrounded() && _jumpRequested) {
             _rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
@@ -70,22 +72,30 @@ public class Movement : MonoBehaviour {
 
         // Starting direction
         var direction = Vector3.zero;
+        
+        // Camera forward without Y
+        var cameraForward = _camera.transform.forward;
+        cameraForward.y = 0;
+        
+        // Camera right without Y
+        var cameraRight = _camera.transform.right;
+        cameraRight.y = 0;
 
-        // Movement
+        // WASD
         if (Keyboard.current.wKey.isPressed) {
-            direction += Vector3.forward;
+            direction += cameraForward;
         }
         
         if (Keyboard.current.aKey.isPressed) {
-            direction += Vector3.left;
+            direction -= cameraRight;
         }
         
         if (Keyboard.current.sKey.isPressed) {
-            direction += Vector3.back;
+            direction -= cameraForward;
         }
 
         if (Keyboard.current.dKey.isPressed) {
-            direction += Vector3.right;
+            direction += cameraRight;
         }
         
         // Check if jump is requested
@@ -119,6 +129,9 @@ public class Movement : MonoBehaviour {
             _time -= Interval;
         }
 
-        transform.Translate(_velocity * Time.deltaTime);
+        // Fix player rotation to camera if moving and grounded
+        if (_velocity != Vector3.zero && IsGrounded()) {
+            transform.rotation = Quaternion.LookRotation(cameraForward);
+        }
     }
 }
