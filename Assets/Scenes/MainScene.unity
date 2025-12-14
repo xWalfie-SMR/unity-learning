@@ -271,8 +271,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FollowCamera
   playerTransform: {fileID: 2118237415}
   speed: 90
-  yOffset: 5
-  zOffset: 5
+  yOffset: 1
+  zOffset: -7
   clamp: {x: 0, y: 85}
   mouseSensitivity: 12
 --- !u!1 &410087039
@@ -1054,7 +1054,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Movement
   speedLabel: {fileID: 1472274488}
   fpsLabel: {fileID: 1902427654}
-  jumpSpeed: 8
+  jumpSpeed: 12
   airControlMult: 0.2
   baseSpeed: 7
   baseAccelSpeed: 7

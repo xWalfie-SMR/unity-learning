@@ -12,9 +12,9 @@ public class FollowCamera : MonoBehaviour {
     // Camera and player position variables
     private Vector3 _startingPlayerPos;
     private Vector3 _offset;
-    public float yOffset = 1f;
-    public float zOffset = -7f;
-    public Vector2 clamp = new Vector2(-20f, 85f);
+    public float yOffset = 1;
+    public float zOffset = -7;
+    public Vector2 clamp = new Vector2(0f, 85f);
     
     // Mouse variables
     public float mouseSensitivity = 12f;
