@@ -48,7 +48,7 @@ namespace Assets.Scripts.CameraSystem {
             _verticalAngle = Mathf.Clamp(_verticalAngle, clamp.x, clamp.y);
 
             // Get rotation and apply offset
-            var rotation = Quaternion.Euler(_verticalAngle, _horizontalAngle, 0);
+            var rotation = Quaternion.Euler(-_verticalAngle, _horizontalAngle, 0);
             var rotatedOffset = rotation * _offset;
 
             var targetPos = playerTransform.position + rotatedOffset;

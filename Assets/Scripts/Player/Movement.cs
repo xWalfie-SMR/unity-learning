@@ -4,10 +4,6 @@ using TMPro;
 
 namespace Assets.Scripts.Player {
     public class Movement : MonoBehaviour {
-        // Time and intervals
-        private float _time;
-        private const float Interval = 1f;
-
         // Rigidbody
         private Rigidbody _rb;
 
@@ -41,10 +37,6 @@ namespace Assets.Scripts.Player {
         private float _runningAccelSpeed;
 
         private void Start() {
-            // Set time to 0 and apply the fps label at start
-            _time = 0f;
-            fpsLabel.text = "FPS: " + Mathf.RoundToInt(1f / Time.deltaTime);
-
             // Get rigidbody
             _rb = GetComponent<Rigidbody>();
 
@@ -68,9 +60,6 @@ namespace Assets.Scripts.Player {
         }
 
         private void Update() {
-            // Update time
-            _time += Time.deltaTime;
-
             // Starting direction
             var direction = Vector3.zero;
 
@@ -117,18 +106,17 @@ namespace Assets.Scripts.Player {
             // Check if grounded, then calculate acceleration speed
             var currentAccel = IsGrounded() ? _accelSpeed : _accelSpeed * airControlMult;
 
-            // Normalize the direction so diagonal movement is the same
+            // Normalize the direction so the diagonal movement is the same
             direction.Normalize();
 
             // Get the target (direction * _maxSpeed) and move towards it
-            _velocity = Vector3.MoveTowards(_velocity, direction * _maxSpeed, currentAccel * Time.deltaTime);
+            var targetVelocity = direction * _maxSpeed;
+            _velocity = Vector3.Dot(targetVelocity, _velocity) < 0f ? Vector3.MoveTowards(_velocity, direction * _maxSpeed, (currentAccel * 5) * Time.deltaTime) : Vector3.MoveTowards(_velocity, direction * _maxSpeed, currentAccel * Time.deltaTime);
+
             speedLabel.text = "Speed: " + _velocity.magnitude.ToString("F2");
 
-            // Display FPS each interval
-            while (_time >= Interval) {
-                fpsLabel.text = "FPS: " + Mathf.RoundToInt(1f / Time.deltaTime);
-                _time -= Interval;
-            }
+            // Display FPS
+            fpsLabel.text = "FPS: " + Mathf.RoundToInt(1f / Time.deltaTime);
 
             // Fix player rotation to camera if moving and grounded
             if (_velocity != Vector3.zero && IsGrounded()) {
