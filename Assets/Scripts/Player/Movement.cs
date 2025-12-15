@@ -28,6 +28,7 @@ namespace Assets.Scripts.Player {
         public float baseSpeed = 7f;
         public float baseAccelSpeed = 7f;
         public float runMultiplier = 2f;
+        public float brakeMultiplier = 10f;
 
         private float _maxSpeed;
         private float _accelSpeed;
@@ -111,7 +112,7 @@ namespace Assets.Scripts.Player {
 
             // Get the target (direction * _maxSpeed) and move towards it
             var targetVelocity = direction * _maxSpeed;
-            _velocity = Vector3.Dot(targetVelocity, _velocity) < 0f ? Vector3.MoveTowards(_velocity, direction * _maxSpeed, (currentAccel * 5) * Time.deltaTime) : Vector3.MoveTowards(_velocity, direction * _maxSpeed, currentAccel * Time.deltaTime);
+            _velocity = Vector3.Dot(targetVelocity, _velocity) < 0f ? Vector3.MoveTowards(_velocity, direction * _maxSpeed, (currentAccel * brakeMultiplier) * Time.deltaTime) : Vector3.MoveTowards(_velocity, direction * _maxSpeed, currentAccel * Time.deltaTime);
 
             speedLabel.text = "Speed: " + _velocity.magnitude.ToString("F2");
 
