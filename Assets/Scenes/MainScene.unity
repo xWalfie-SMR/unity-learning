@@ -1058,7 +1058,8 @@ MonoBehaviour:
   airControlMult: 0.4
   baseSpeed: 7
   baseAccelSpeed: 7
-  runMultiplier: 6
+  runMultiplier: 2
+  brakeMultiplier: 10
 --- !u!65 &2118237412
 BoxCollider:
   m_ObjectHideFlags: 0

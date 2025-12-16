@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.Serialization;
 
-namespace Assets.Scripts.Player {
+namespace Player {
     public class Movement : MonoBehaviour {
         // Rigidbody
         private Rigidbody _rb;
@@ -17,11 +19,11 @@ namespace Assets.Scripts.Player {
         // Physics variables
         private Vector3 _velocity;
         private bool _jumpRequested;
-        public float jumpSpeed = 12f;
-        public float airControlMult = 0.2f;
+        public float jumpHeight = 0.5f;
+        public float airControlMult = 0.4f;
 
         private bool IsGrounded() {
-            return Physics.Raycast(transform.position, -Vector3.up, 0.6f);
+            return Physics.Raycast(transform.position, -Vector3.up, 1.4f);
         }
 
         // Movement variables
@@ -54,10 +56,10 @@ namespace Assets.Scripts.Player {
             _rb.MovePosition(transform.position + _velocity * Time.fixedDeltaTime);
 
             // Jump
-            if (IsGrounded() && _jumpRequested) {
-                _rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
-                _jumpRequested = false;
-            }
+            if (!IsGrounded() || !_jumpRequested) return;
+            var jumpVelocity = Mathf.Sqrt(2f * Mathf.Abs(Physics.gravity.y) * jumpHeight);
+            _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, jumpVelocity, _rb.linearVelocity.z);
+            _jumpRequested = false;
         }
 
         private void Update() {
@@ -89,7 +91,7 @@ namespace Assets.Scripts.Player {
                 direction += cameraRight;
             }
 
-            // Check if jump is requested
+            // Check if a jump is requested
             if (Keyboard.current.spaceKey.wasPressedThisFrame) {
                 _jumpRequested = true;
             }

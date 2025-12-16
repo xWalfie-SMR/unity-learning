@@ -1,9 +1,8 @@
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Assets.Scripts.CameraSystem {
-    public class FollowCamera : MonoBehaviour {
+namespace CameraSystem {
+    public class TPSController : MonoBehaviour {
         // Define the player's transform
         public Transform playerTransform;
 
@@ -15,7 +14,7 @@ namespace Assets.Scripts.CameraSystem {
         private Vector3 _offset;
         public float yOffset = 1;
         public float zOffset = -7;
-        public Vector2 clamp = new Vector2(0f, 85f);
+        public Vector2 clamp = new(0f, 85f);
 
         // Mouse variables
         public float mouseSensitivity = 12f;
