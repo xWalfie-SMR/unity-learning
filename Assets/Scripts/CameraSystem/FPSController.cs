@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace CameraSystem {
-    public class FPSController : MonoBehaviour {
+    public class FpsController : MonoBehaviour {
         // Define the player's transform
         public Transform playerTransform;
         
@@ -11,16 +11,17 @@ namespace CameraSystem {
 
         // Mouse variables
         public float mouseSensitivity = 12f;
-        private float _horizontalAngle;
-        private float _verticalAngle;
-        
+
+        public float HorizontalAngle { get; set; }
+        public float VerticalAngle { get; set; }
+
         public Vector2 clamp = new(0f, 85f);
 
         private void Start() {
-            _horizontalAngle = 0f;
-            _verticalAngle = 0f;
+            HorizontalAngle = 0f;
+            VerticalAngle = 0f;
 
-            var rotation = Quaternion.Euler(_verticalAngle, _horizontalAngle, 0);
+            var rotation = Quaternion.Euler(VerticalAngle, HorizontalAngle, 0);
             
             Mouse.current.delta.ReadValue();
         }
@@ -29,15 +30,15 @@ namespace CameraSystem {
             var mouseDelta = Mouse.current.delta.ReadValue() * (mouseSensitivity * Time.smoothDeltaTime);
 
             // Store angles from mouse delta
-            _verticalAngle += mouseDelta.y;
-            _horizontalAngle += mouseDelta.x;
+            VerticalAngle += mouseDelta.y;
+            HorizontalAngle += mouseDelta.x;
 
             // Clamp the vertical angle
-            _verticalAngle = Mathf.Clamp(_verticalAngle, clamp.x, clamp.y);
+            VerticalAngle = Mathf.Clamp(VerticalAngle, clamp.x, clamp.y);
 
             // Get rotation
-            var rotation = Quaternion.Euler(-_verticalAngle, _horizontalAngle, 0);
-            var playerRotation = Quaternion.Euler(0, _horizontalAngle, 0);
+            var rotation = Quaternion.Euler(-VerticalAngle, HorizontalAngle, 0);
+            var playerRotation = Quaternion.Euler(0, HorizontalAngle, 0);
             
             transform.rotation = rotation;
             transform.position = playerTransform.position + Vector3.up * eyeHeight;

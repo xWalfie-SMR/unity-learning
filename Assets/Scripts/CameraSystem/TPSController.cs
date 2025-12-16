@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace CameraSystem {
-    public class TPSController : MonoBehaviour {
+    public class TpsController : MonoBehaviour {
         // Define the player's transform
         public Transform playerTransform;
 
@@ -18,16 +18,17 @@ namespace CameraSystem {
 
         // Mouse variables
         public float mouseSensitivity = 12f;
-        private float _horizontalAngle;
-        private float _verticalAngle;
+
+        public float HorizontalAngle { get; set; }
+        public float VerticalAngle { get; set; }
 
         private void Start() {
             _offset = new Vector3(0, yOffset, zOffset);
 
-            _horizontalAngle = 0f;
-            _verticalAngle = 20f;
+            HorizontalAngle = 0f;
+            VerticalAngle = 20f;
 
-            var rotation = Quaternion.Euler(_verticalAngle, _horizontalAngle, 0);
+            var rotation = Quaternion.Euler(VerticalAngle, HorizontalAngle, 0);
             var rotatedOffset = rotation * _offset;
 
             transform.position = playerTransform.position + rotatedOffset;
@@ -40,14 +41,14 @@ namespace CameraSystem {
             var mouseDelta = Mouse.current.delta.ReadValue() * (mouseSensitivity * Time.smoothDeltaTime);
 
             // Store angles from mouse delta
-            _verticalAngle += mouseDelta.y;
-            _horizontalAngle += mouseDelta.x;
+            VerticalAngle += mouseDelta.y;
+            HorizontalAngle += mouseDelta.x;
 
             // Clamp the vertical angle
-            _verticalAngle = Mathf.Clamp(_verticalAngle, clamp.x, clamp.y);
+            VerticalAngle = Mathf.Clamp(VerticalAngle, clamp.x, clamp.y);
 
             // Get rotation and apply offset
-            var rotation = Quaternion.Euler(-_verticalAngle, _horizontalAngle, 0);
+            var rotation = Quaternion.Euler(-VerticalAngle, HorizontalAngle, 0);
             var rotatedOffset = rotation * _offset;
 
             var targetPos = playerTransform.position + rotatedOffset;

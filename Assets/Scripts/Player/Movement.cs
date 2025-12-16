@@ -10,7 +10,7 @@ namespace Player {
         private Rigidbody _rb;
 
         // Camera
-        private Camera _camera;
+        public Camera activeCamera;
 
         // Labels
         public TMP_Text speedLabel;
@@ -43,9 +43,6 @@ namespace Player {
             // Get rigidbody
             _rb = GetComponent<Rigidbody>();
 
-            // Get camera
-            _camera = Camera.main;
-
             _runningSpeed = baseSpeed * runMultiplier;
             _runningAccelSpeed = baseAccelSpeed * runMultiplier;
         }
@@ -63,15 +60,17 @@ namespace Player {
         }
 
         private void Update() {
+            if (!activeCamera) return;
+            
             // Starting direction
             var direction = Vector3.zero;
 
             // Camera forward without Y
-            var cameraForward = _camera.transform.forward;
+            var cameraForward = activeCamera.transform.forward;
             cameraForward.y = 0;
 
             // Camera right without Y
-            var cameraRight = _camera.transform.right;
+            var cameraRight = activeCamera.transform.right;
             cameraRight.y = 0;
 
             // WASD
