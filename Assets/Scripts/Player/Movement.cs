@@ -113,7 +113,7 @@ namespace Player {
 
             // Get the target (direction * _maxSpeed) and move towards it
             var targetVelocity = direction * _maxSpeed;
-            _velocity = Vector3.Dot(targetVelocity, _velocity) < 0f ? Vector3.MoveTowards(_velocity, direction * _maxSpeed, (currentAccel * brakeMultiplier) * Time.deltaTime) : Vector3.MoveTowards(_velocity, direction * _maxSpeed, currentAccel * Time.deltaTime);
+            _velocity = (Vector3.Dot(targetVelocity, _velocity) < 0f) && IsGrounded() ? Vector3.MoveTowards(_velocity, direction * _maxSpeed, (currentAccel * brakeMultiplier) * Time.deltaTime) : Vector3.MoveTowards(_velocity, direction * _maxSpeed, currentAccel * Time.deltaTime);
 
             speedLabel.text = "Speed: " + _velocity.magnitude.ToString("F2");
 

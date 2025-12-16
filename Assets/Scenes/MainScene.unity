@@ -616,7 +616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b237901bdd079c645a462bed900cf8d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraSystem.FirstPersonCamera
-  playerTransform: {fileID: 0}
+  playerTransform: {fileID: 2118237415}
   eyeHeight: 1.6
   mouseSensitivity: 12
   clamp: {x: 0, y: 85}
