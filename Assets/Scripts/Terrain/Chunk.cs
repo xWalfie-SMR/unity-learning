@@ -43,6 +43,11 @@ namespace Terrain {
             // Lists to hold mesh data
             var vertices = new List<Vector3>();
             var triangles = new List<int>();
+            
+            // Center offsets
+            var centerX = chunkWidth / 2f;
+            var centerY = WorldHeight / 2f;
+            var centerZ = chunkWidth / 2f;
 
             // Loop through each block
             for (var x = 0; x < chunkWidth; x++) {
@@ -57,10 +62,10 @@ namespace Terrain {
                             var vertIndex = vertices.Count;
 
                             // Each corner
-                            vertices.Add(new Vector3(x, y + 1, z));         // bottom-left
-                            vertices.Add(new Vector3(x + 1, y + 1, z));     // bottom-right
-                            vertices.Add(new Vector3(x + 1, y + 1, z + 1)); // top-right
-                            vertices.Add(new Vector3(x, y + 1, z + 1));     // top-left
+                            vertices.Add(new Vector3(x - centerX, y + 1 + WorldBottom, z - centerZ));
+                            vertices.Add(new Vector3(x + 1 - centerX, y + 1 + WorldBottom, z - centerZ));
+                            vertices.Add(new Vector3(x + 1 - centerX, y + 1 + WorldBottom, z + 1 - centerZ));
+                            vertices.Add(new Vector3(x - centerX, y + 1 + WorldBottom, z + 1 - centerZ));
 
                             // Each triangle
                             triangles.Add(vertIndex + 0);
@@ -76,11 +81,11 @@ namespace Terrain {
                             var vertIndex = vertices.Count;
 
                             // Each corner
-                            vertices.Add(new Vector3(x, y, z));         // bottom-left
-                            vertices.Add(new Vector3(x + 1, y, z));     // bottom-right
-                            vertices.Add(new Vector3(x + 1, y, z + 1)); // top-right
-                            vertices.Add(new Vector3(x, y, z + 1));     // top-left
-
+                            vertices.Add(new Vector3(x - centerX, y + WorldBottom, z - centerZ));
+                            vertices.Add(new Vector3(x + 1 - centerX, y + WorldBottom, z - centerZ));
+                            vertices.Add(new Vector3(x + 1 - centerX, y + WorldBottom, z + 1 - centerZ));
+                            vertices.Add(new Vector3(x - centerX, y + WorldBottom, z + 1 - centerZ));
+    
                             // Each triangle
                             triangles.Add(vertIndex + 0);
                             triangles.Add(vertIndex + 1);
@@ -95,10 +100,10 @@ namespace Terrain {
                             var vertIndex = vertices.Count;
 
                             // Each corner
-                            vertices.Add(new Vector3(x, y, z + 1));         // bottom-left
-                            vertices.Add(new Vector3(x + 1, y, z + 1));     // bottom-right
-                            vertices.Add(new Vector3(x + 1, y + 1, z + 1)); // top-right
-                            vertices.Add(new Vector3(x, y + 1, z + 1));     // top-left
+                            vertices.Add(new Vector3(x - centerX, y + WorldBottom, z + 1 - centerZ));
+                            vertices.Add(new Vector3(x + 1 - centerX, y + WorldBottom, z + 1 - centerZ));
+                            vertices.Add(new Vector3(x + 1 - centerX, y + 1 + WorldBottom, z + 1 - centerZ));
+                            vertices.Add(new Vector3(x - centerX, y + 1 + WorldBottom, z + 1 - centerZ));
 
                             // Each triangle
                             triangles.Add(vertIndex + 0);
@@ -114,10 +119,10 @@ namespace Terrain {
                             var vertIndex = vertices.Count;
 
                             // Each corner
-                            vertices.Add(new Vector3(x, y, z));             // bottom-left
-                            vertices.Add(new Vector3(x + 1, y, z));         // bottom-right
-                            vertices.Add(new Vector3(x + 1, y + 1, z));     // top-right
-                            vertices.Add(new Vector3(x, y + 1, z));         // top-left
+                            vertices.Add(new Vector3(x - centerX, y + WorldBottom, z - centerZ));
+                            vertices.Add(new Vector3(x + 1 - centerX, y + WorldBottom, z - centerZ));
+                            vertices.Add(new Vector3(x + 1 - centerX, y + 1 + WorldBottom, z - centerZ));
+                            vertices.Add(new Vector3(x - centerX, y + 1 + WorldBottom, z - centerZ));
 
                             // Each triangle
                             triangles.Add(vertIndex + 0);
@@ -133,10 +138,10 @@ namespace Terrain {
                             var vertIndex = vertices.Count;
 
                             // Each corner
-                            vertices.Add(new Vector3(x + 1, y, z));         // bottom-left
-                            vertices.Add(new Vector3(x + 1, y, z + 1));     // bottom-right
-                            vertices.Add(new Vector3(x + 1, y + 1, z + 1)); // top-right
-                            vertices.Add(new Vector3(x + 1, y + 1, z));     // top-left
+                            vertices.Add(new Vector3(x + 1 - centerX, y + WorldBottom, z - centerZ));
+                            vertices.Add(new Vector3(x + 1 - centerX, y + WorldBottom, z + 1 - centerZ));
+                            vertices.Add(new Vector3(x + 1 - centerX, y + 1 + WorldBottom, z + 1 - centerZ));
+                            vertices.Add(new Vector3(x + 1 - centerX, y + 1 + WorldBottom, z - centerZ));
 
                             // Each triangle
                             triangles.Add(vertIndex + 0);
@@ -152,10 +157,10 @@ namespace Terrain {
                             var vertIndex = vertices.Count;
 
                             // Each corner
-                            vertices.Add(new Vector3(x, y, z));             // bottom-left
-                            vertices.Add(new Vector3(x, y, z + 1));         // bottom-right
-                            vertices.Add(new Vector3(x, y + 1, z + 1));     // top-right
-                            vertices.Add(new Vector3(x, y + 1, z));         // top-left
+                            vertices.Add(new Vector3(x - centerX, y + WorldBottom, z - centerZ));
+                            vertices.Add(new Vector3(x - centerX, y + WorldBottom, z + 1 - centerZ));
+                            vertices.Add(new Vector3(x - centerX, y + 1 + WorldBottom, z + 1 - centerZ));
+                            vertices.Add(new Vector3(x - centerX, y + 1 + WorldBottom, z - centerZ));
 
                             // Each triangle
                             triangles.Add(vertIndex + 0);
